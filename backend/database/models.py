@@ -55,7 +55,24 @@ class LocalOfficial(db.Model):
     password = db.Column(db.String(255), nullable=False)
     street_address = db.Column(db.String(255), nullable=False)
     city = db.Column(db.String(255), nullable=False)
-    zip = db.Column(db.Integer)
-    phone = db.Column(db.Integer)
-    request_id = db.Column(db.Integer, db.ForeignKey('request.official_owner'))
-    request = db.relationship("Request")
+    zip = db.Column(db.Integer, nullable=False)
+    phone = db.Column(db.Integer, nullable=False)
+
+class Request(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(255), nullable=False)
+    progress = db.Column(db.String(255), nullable=False)
+    seen = db.Column(db.Boolean, default = False)
+    official_owner_id = db.Column(db.Integer, db.ForeignKey('localofficial.id'))
+    official_owner = db.relationship("LocalOfficial")
+    latitude = db.Column(db.Integer)
+    longitude = db.Column(db.Integer)
+    requester = db.Column(db.String(255), nullable=False)
+
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable = False)
+    is_official = db.Column(db.Boolean, default= False, nullable = False)
+    votes = db.Column(db.Integer, default = 0)
+    
