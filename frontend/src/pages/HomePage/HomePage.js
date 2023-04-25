@@ -31,7 +31,7 @@ const HomePage = () => {
 
   //Google Maps
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyBqRperHRv-Otr6yYCe3dksq-Fw6-prjOM",
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
   });
   return (
     <div className="container">
