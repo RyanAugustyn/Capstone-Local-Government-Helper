@@ -56,3 +56,12 @@ button:hover {
   padding: 3px 7px;
   font-size: 17px;
 }
+
+.mapContainer {
+  width: 300px;
+  height: 500px;
+}
+
+.test {
+  background-color: red;
+}

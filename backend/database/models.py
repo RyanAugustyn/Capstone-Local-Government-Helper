@@ -31,3 +31,31 @@ class Car(db.Model):
     user = db.relationship("User")
 
 # TODO: Add your models below, remember to add a new migration and upgrade database
+class Constituent(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(255), nullable=False)
+    last_name = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    street_address = db.Column(db.String(255), nullable=False)
+    city = db.Column(db.String(255), nullable=False)
+    zip = db.Column(db.Integer, nullable=False)
+    phone = db.Column(db.Integer)
+    blocked = db.Column(db.Boolean, default=False)
+    request_id = db.Column(db.Integer, db.ForeignKey('request.requester'))
+    request = db.relationship("Request")
+
+
+class LocalOfficial(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(255), nullable=False)
+    last_name = db.Column(db.String(255), nullable=False)
+    position = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    street_address = db.Column(db.String(255), nullable=False)
+    city = db.Column(db.String(255), nullable=False)
+    zip = db.Column(db.Integer)
+    phone = db.Column(db.Integer)
+    request_id = db.Column(db.Integer, db.ForeignKey('request.official_owner'))
+    request = db.relationship("Request")

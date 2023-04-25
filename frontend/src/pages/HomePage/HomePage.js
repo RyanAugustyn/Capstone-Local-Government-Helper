@@ -1,6 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import "../../App.css";
 
 import axios from "axios";
 
@@ -26,10 +28,25 @@ const HomePage = () => {
     };
     fetchCars();
   }, [token]);
+
+  //Google Maps
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyBqRperHRv-Otr6yYCe3dksq-Fw6-prjOM",
+  });
   return (
     <div className="container">
       {console.log(user)}
       <h1>Home Page for {user.username}!</h1>
+      <p>MAP</p>
+      {!isLoaded ? (
+        <div>Loading...</div>
+      ) : (
+        <GoogleMap
+          zoom={10}
+          center={{ lat: 45, lng: -89 }}
+          mapContainerClassName="mapContainer"
+        ></GoogleMap>
+      )}
       {cars &&
         cars.map((car) => (
           <p key={car.id}>
