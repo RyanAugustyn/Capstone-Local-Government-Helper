@@ -1,6 +1,6 @@
 from flask_marshmallow import Marshmallow
 from marshmallow import post_load, fields
-from database.models import User, Car, Constituent, LocalOfficial, Request, Message
+from database.models import User, Car, Request, Message
 
 ma = Marshmallow()
 
@@ -15,12 +15,18 @@ class RegisterSchema(ma.Schema):
     first_name = fields.String(required=True)
     last_name = fields.String(required=True)
     email = fields.String(required=True)
+    street_address = fields.String(required=True)
+    city = fields.String(required=True)
+    zip = fields.Integer(required=True)
+    phone = fields.Integer()
     class Meta:
-        fields = ("id", "username",  "password", "first_name", "last_name", "email")
+        fields = ("id", "username",  "password", "first_name", "last_name", "email", "street_address", "city", "zip", "phone")
 
     @post_load
     def create_user(self, data, **kwargs):
         return User(**data)
+    
+register_schema = RegisterSchema()
     
 class UserSchema(ma.Schema):
     """
@@ -31,10 +37,16 @@ class UserSchema(ma.Schema):
     first_name = fields.String(required=True)
     last_name = fields.String(required=True)
     email = fields.String(required=True)
+    street_address = fields.String(required=True)
+    city = fields.String(required=True)
+    zip = fields.Integer(required=True)
+    phone = fields.Integer()
+    blocked = fields.Boolean()
+    position = fields.String(required=True)
     class Meta:
-        fields = ("id", "username", "first_name", "last_name", "email",)
+        fields = ("id", "username", "first_name", "last_name", "email", "street_address", "city", "zip", "phone", "blocked", "position")
 
-register_schema = RegisterSchema()
+
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
@@ -60,61 +72,18 @@ cars_schema = CarSchema(many=True)
 
 # TODO: Add your schemas below
 
-class ConstituentSchema(ma.Schema):
-    id = fields.Integer(primary_key=True)
-    first_name = fields.String(required=True)
-    last_name = fields.String(required=True)
-    email = fields.String(required=True)
-    password = fields.String(required=True)
-    street_address = fields.String(required=True)
-    city = fields.String(required=True)
-    zip = fields.Integer(required=True)
-    phone = fields.Integer(required=True)
-    blocked = fields.Boolean()
-    request_id = fields.Integer()
-    class Meta: 
-        fields = ("id", "first_name", "last_name", "email", "password", "street_address", "city", "zip", "phone" "blocked", "request_id")
-
-    @post_load
-    def create_constitunet(self, data, **kwargs):
-        return Constituent(**data)
-    
-constituent_schema = ConstituentSchema()
-constituents_schema = ConstituentSchema(many=True)
-
-
-class LocalOfficialSchema(ma.Schema):
-    id = fields.Integer(primary_key=True)
-    first_name = fields.String(required=True)
-    last_name = fields.String(required=True)
-    position = fields.String(required=True)
-    email = fields.String(required=True)
-    password = fields.String(required=True)
-    street_address = fields.String(required=True)
-    city = fields.String(required=True)
-    zip = fields.Integer(required=True)
-    phone = fields.Integer(required=True)
-    class Meta: 
-        fields = ("id", "first_name", "last_name", "position", "email", "password", "street_address", "city", "zip", "phone")
-
-    @post_load
-    def create_constitunet(self, data, **kwargs):
-        return LocalOfficial(**data)
-    
-local_official_schema = LocalOfficialSchema()
-local_officials_schema = LocalOfficialSchema(many=True)
-
-
 class RequestSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     type = fields.String(required=True)
-    progress = fields.String(required=True)
-    seen = fields.Boolean(required=True)
-    official_owner_id = fields.Integer(required=True)
-    official_owner = ma.Nested(LocalOfficialSchema, many=False)
+    description = fields.String(required=True)
+    progress = fields.Integer()
+    seen = fields.Boolean()
+    assigned_to = fields.String()
     latitude = fields.Integer(required=True)
     longitude = fields.Integer(required=True)
     requester = fields.String(required=True)
+    user_id = fields.Integer()
+    user = ma.Nested(UserSchema, many=False)
     class Meta: 
         fields = ("id", "type", "progress", "seen", "official_owner_id", "official_owner", "latitude", "longitude", "requester")
 
@@ -131,8 +100,10 @@ class MessageSchema(ma.Schema):
     name = fields.String(required=True)
     is_official = fields.String(required=True)
     votes = fields.Integer()
+    user_id = fields.Integer()
+    user = ma.Nested(UserSchema, many=False)
     class Meta: 
-        fields = ("id", "name", "is_official", "votes")
+        fields = ("id", "name", "is_official", "votes", "user_id", "user")
 
     @post_load
     def create_constitunet(self, data, **kwargs):
