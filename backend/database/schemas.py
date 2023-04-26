@@ -85,7 +85,7 @@ class RequestSchema(ma.Schema):
     user_id = fields.Integer()
     user = ma.Nested(UserSchema, many=False)
     class Meta: 
-        fields = ("id", "type", "progress", "seen", "official_owner_id", "official_owner", "latitude", "longitude", "requester")
+        fields = ("id", "type", "description", "progress", "seen", "assigned_to", "latitude", "longitude", "requester", "user_id", "user")
 
     @post_load
     def create_request(self, data, **kwargs):
