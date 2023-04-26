@@ -18,7 +18,7 @@ class RegisterSchema(ma.Schema):
     street_address = fields.String(required=True)
     city = fields.String(required=True)
     zip = fields.Integer(required=True)
-    phone = fields.Integer()
+    phone = fields.String()
     class Meta:
         fields = ("id", "username",  "password", "first_name", "last_name", "email", "street_address", "city", "zip", "phone")
 
@@ -88,7 +88,7 @@ class RequestSchema(ma.Schema):
         fields = ("id", "type", "progress", "seen", "official_owner_id", "official_owner", "latitude", "longitude", "requester")
 
     @post_load
-    def create_constitunet(self, data, **kwargs):
+    def create_request(self, data, **kwargs):
         return Request(**data)
     
 request_schema = RequestSchema()
@@ -98,15 +98,16 @@ requests_schema = RequestSchema(many=True)
 class MessageSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     name = fields.String(required=True)
-    is_official = fields.String(required=True)
+    text = fields.String(required=True)
+    is_official = fields.Boolean(required=True)
     votes = fields.Integer()
     user_id = fields.Integer()
     user = ma.Nested(UserSchema, many=False)
     class Meta: 
-        fields = ("id", "name", "is_official", "votes", "user_id", "user")
+        fields = ("id", "name", "text", "is_official", "votes", "user_id", "user")
 
     @post_load
-    def create_constitunet(self, data, **kwargs):
+    def create_message(self, data, **kwargs):
         return Message(**data)
     
 message_schema = MessageSchema()

@@ -13,7 +13,7 @@ class User(db.Model):
     street_address = db.Column(db.String(255), nullable=False)
     city = db.Column(db.String(255), nullable=False)
     zip = db.Column(db.Integer, nullable=False)
-    phone = db.Column(db.Integer)
+    phone = db.Column(db.String(255))
     blocked = db.Column(db.Boolean, default=False)
     position = db.Column(db.String(255))
 
@@ -55,6 +55,7 @@ class Request(db.Model):
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable = False)
+    text = db.Column(db.String(2500), nullable = False)
     is_official = db.Column(db.Boolean, default= False, nullable = False)
     votes = db.Column(db.Integer, default = 0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
