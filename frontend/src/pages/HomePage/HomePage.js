@@ -15,7 +15,6 @@ import SubmitRequest from "../../components/SubmitRequest";
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
   // The "token" value is the JWT token that you will send in the header of any request requiring authentication
-  //TODO: Add an AddCars Page to add a car for a logged in user's garage
   const [user, token] = useAuth();
   const [cars, setCars] = useState([]);
   const [requests, setRequests] = useState([
@@ -244,7 +243,7 @@ const HomePage = () => {
       latitude: 46.0,
       longitude: 47.0,
     },
-  ]);
+  ]); //get list of requests through axios so can see on the map
   const [markerPosition, setMarkerPosition] = useState(null);
 
   const handleMapClick = (e) => {
@@ -279,7 +278,6 @@ const HomePage = () => {
     () => ({
       disableDefaultUI: false,
       clickableIcons: false,
-      // drawingModes: [google.maps.drawing.OverlayType.MARKER],
     }),
     []
   );
@@ -313,21 +311,6 @@ const HomePage = () => {
             draggable={true}
             onMouseUp={handleMapClick}
           ></Marker>
-
-          {/* <DrawingManager
-            drawingMode={google.maps.drawing.OverlayType}
-            drawingControl={true}
-            // drawingControlOptions = {
-            //   position= google.maps.ControlPosition.TOP_LEFT
-            //   drawingModes = [
-            //           google.maps.drawing.OverlayType.MARKER,
-            //           google.maps.drawing.OverlayType.CIRCLE,
-            //           google.maps.drawing.OverlayType.POLYGON,
-            //           google.maps.drawing.OverlayType.POLYLINE,
-            //           google.maps.drawing.OverlayType.RECTANGLE,
-            //         ]
-            //       }
-          /> */}
         </GoogleMap>
       )}
       <SubmitRequest
