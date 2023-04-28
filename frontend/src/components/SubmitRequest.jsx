@@ -3,13 +3,13 @@ import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
-const SubmitRequest = () => {
+const SubmitRequest = (props) => {
   const [user, token] = useAuth();
   const [type, setType] = useState("Issue type?");
   const [description, setDescription] = useState("");
-  const [latitude, setLatitude] = useState(0.0);
-  const [longitude, setLongitude] = useState(0.0);
   const [requester, setRequester] = useState("");
+
+  //axios get individual user for requester field
 
   const handleSelect = (e) => {
     console.log(e);
@@ -20,9 +20,9 @@ const SubmitRequest = () => {
     let newRequest = {
       type: type,
       description: description,
-      latitude: latitude,
-      longitude: longitude,
-      requester: requester,
+      latitude: props.lat,
+      longitude: props.lng,
+      requester: user.username,
       //don't need 'requester' if have token tying to user
     };
 
@@ -66,27 +66,6 @@ const SubmitRequest = () => {
           <input
             name="description"
             onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <div className="input-group mb-3">
-          <label>Latitude</label>
-          <input
-            name="latitude"
-            onChange={(e) => setLatitude(e.target.value)}
-          />
-        </div>
-        <div className="input-group mb-3">
-          <label>Longitude</label>
-          <input
-            name="longitude"
-            onChange={(e) => setLongitude(e.target.value)}
-          />
-        </div>
-        <div className="input-group mb-3">
-          <label>Requester</label>
-          <input
-            name="requester"
-            onChange={(e) => setRequester(e.target.value)}
           />
         </div>
         <button type="submit">Submit Request</button>
