@@ -5,6 +5,7 @@ import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import "../../App.css";
 
 import axios from "axios";
+import SubmitRequest from "../../components/SubmitRequest";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -47,12 +48,7 @@ const HomePage = () => {
           mapContainerClassName="mapContainer"
         ></GoogleMap>
       )}
-      {cars &&
-        cars.map((car) => (
-          <p key={car.id}>
-            {car.year} {car.model} {car.make}
-          </p>
-        ))}
+      <SubmitRequest></SubmitRequest>
     </div>
   );
 };
