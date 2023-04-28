@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
-import "bootstrap/dist/css/bootstrap.css";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 
 const SubmitRequest = () => {
   const [user, token] = useAuth();
-  const [type, setType] = useState("pothole");
+  const [type, setType] = useState("Issue type?");
   const [description, setDescription] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [latitude, setLatitude] = useState(0.0);
+  const [longitude, setLongitude] = useState(0.0);
   const [requester, setRequester] = useState("");
 
+  const handleSelect = (e) => {
+    console.log(e);
+    setType(e);
+  };
   async function handleSubmit(event) {
     event.preventDefault();
     let newRequest = {
@@ -41,62 +45,50 @@ const SubmitRequest = () => {
 
   return (
     <div>
-      <a
-        className="btn btn-primary"
-        data-bs-toggle="collapse"
-        href="#collapseExample"
-        role="button"
-        aria-expanded="false"
-        aria-controls="collapseExample"
-      >
-        Bootstrap button
-      </a>
-      <form onSubmit={handleSubmit}>
+      <form className="form-control" onSubmit={handleSubmit}>
         <h1>Send us a Request!</h1>
-        {/* test */}
+        <DropdownButton
+          class="btn btn-outline-secondary dropdown-toggle"
+          title={type}
+          data-bs-toggle="dropdown"
+          onSelect={(e) => {
+            setType(e);
+          }}
+        >
+          <Dropdown.Item eventKey="Pothole">Pothole</Dropdown.Item>
+          <Dropdown.Item eventKey="Animal Control">
+            Animal Control
+          </Dropdown.Item>
+          <Dropdown.Item eventKey="Power Line">Power Line</Dropdown.Item>
+        </DropdownButton>
         <div className="input-group mb-3">
-          <div class="input-group-prepend">
-            <button
-              class="btn btn-outline-secondary dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-              onChange={(e) => setType(e.target.value)}
-            >
-              Choose Issue Type
-            </button>
-            <div className="dropdown-menu">
-              <a className="dropdown-item" href="#">
-                Pothole
-              </a>
-              <a className="dropdown-item" href="#">
-                Animal Control
-              </a>
-              <a className="dropdown-item" href="#">
-                Power Line
-              </a>
-            </div>
-          </div>
+          <label>Description</label>
+          <input
+            name="description"
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </div>
-        {/* end test */}
-        <label>Description</label>
-        <input
-          name="description"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <label>Latitude</label>
-        <input name="latitude" onChange={(e) => setLatitude(e.target.value)} />
-        <label>Longitude</label>
-        <input
-          name="longitude"
-          onChange={(e) => setLongitude(e.target.value)}
-        />
-        <label>Requester</label>
-        <input
-          name="requester"
-          onChange={(e) => setRequester(e.target.value)}
-        />
+        <div className="input-group mb-3">
+          <label>Latitude</label>
+          <input
+            name="latitude"
+            onChange={(e) => setLatitude(e.target.value)}
+          />
+        </div>
+        <div className="input-group mb-3">
+          <label>Longitude</label>
+          <input
+            name="longitude"
+            onChange={(e) => setLongitude(e.target.value)}
+          />
+        </div>
+        <div className="input-group mb-3">
+          <label>Requester</label>
+          <input
+            name="requester"
+            onChange={(e) => setRequester(e.target.value)}
+          />
+        </div>
         <button type="submit">Submit Request</button>
       </form>
     </div>
