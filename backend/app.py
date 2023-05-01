@@ -8,7 +8,7 @@ from database.models import db
 from database.schemas import ma
 from resources.auth import LoginResource, RegisterResource
 from resources.cars import AllCarResource, UserCarResource
-from resources.requests import AllMessagesResource, MessageResource, AllRequestsResource, RequestResource
+from resources.requests import AllMessagesResource, MessageResource, AllRequestsResource, RequestResource, UserResource, AllUsersResource, AllOfficials
 from dotenv import load_dotenv
 from os import environ
 
@@ -61,5 +61,8 @@ def create_routes():
     api.add_resource(MessageResource, '/api/messages/<int:message_id>')
     api.add_resource(AllRequestsResource, '/api/requests')
     api.add_resource(RequestResource, '/api/requests/<int:request_id>')
+    api.add_resource(AllUsersResource, '/api/users')
+    api.add_resource(UserResource,'/api/users/<int:user_id>' )
+    api.add_resource(AllOfficials, '/api/officials')
     
     return api

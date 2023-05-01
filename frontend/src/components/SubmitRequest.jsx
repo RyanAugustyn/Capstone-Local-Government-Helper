@@ -60,6 +60,7 @@ const SubmitRequest = (props) => {
             Animal Control
           </Dropdown.Item>
           <Dropdown.Item eventKey="Power Line">Power Line</Dropdown.Item>
+          <Dropdown.Item eventKey="Damaged Sign">Damaged Sign</Dropdown.Item>
         </DropdownButton>
         <div className="input-group mb-3">
           <label>Description</label>
