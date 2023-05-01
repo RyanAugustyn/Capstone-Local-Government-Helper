@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const DisplayRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -21,9 +22,11 @@ const DisplayRequests = () => {
       <h2>Current Requests</h2>
       {requests.map((request, index) => (
         <div key={index}>
-          <h2> Request: {request.type}</h2>
-          <p>Official in Charge: {request.assigned_to}</p>
-          <p>Status: {request.progress}</p>
+          <Link className="requestLink" to={`/requests/${request.id}`}>
+            <h2> Request: {request.type}</h2>
+            <p>Official in Charge: {request.assigned_to}</p>
+            <p>Status: {request.progress}</p>
+          </Link>
         </div>
       ))}
     </div>

@@ -48,6 +48,9 @@ class Request(db.Model):
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     requester = db.Column(db.String(255), nullable=False)
+    votes = db.Column(db.Integer, default = 0)
+    message_id = db.Column(db.Integer, db.ForeignKey('message.id'))
+    message = db.relationship("Message")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship("User")
 
@@ -55,9 +58,8 @@ class Request(db.Model):
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable = False)
+    username = db.Column(db.String(255), nullable = False)
     text = db.Column(db.String(2500), nullable = False)
     is_official = db.Column(db.Boolean, default= False, nullable = False)
-    votes = db.Column(db.Integer, default = 0)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship("User")
+
     

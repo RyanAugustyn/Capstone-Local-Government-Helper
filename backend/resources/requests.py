@@ -43,9 +43,9 @@ class AllMessagesResource(Resource):
     
     @jwt_required()
     def post(self):
-        user_id = get_jwt_identity()
+        #user_id = get_jwt_identity()
         form_data = request.get_json()
-        form_data["user_id"] = int(user_id)
+        # form_data["user_id"] = int(user_id)
         message = message_schema.load(form_data)
         db.session.add(message)
         db.session.commit()

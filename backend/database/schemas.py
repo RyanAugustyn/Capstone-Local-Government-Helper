@@ -72,6 +72,23 @@ cars_schema = CarSchema(many=True)
 
 # TODO: Add your schemas below
 
+
+class MessageSchema(ma.Schema):
+    id = fields.Integer(primary_key=True)
+    name = fields.String(required=True)
+    username = fields.String(required=True)
+    text = fields.String(required=True)
+    is_official = fields.Boolean(required=True)
+    class Meta: 
+        fields = ("id", "name", "username", "text", "is_official")
+
+    @post_load
+    def create_message(self, data, **kwargs):
+        return Message(**data)
+    
+message_schema = MessageSchema()
+messages_schema = MessageSchema(many=True)
+
 class RequestSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     type = fields.String(required=True)
@@ -82,10 +99,13 @@ class RequestSchema(ma.Schema):
     latitude = fields.Float(required=True)
     longitude = fields.Float(required=True)
     requester = fields.String(required=True)
+    votes = fields.Integer()
+    message_id = fields.Integer()
+    message = ma.Nested(MessageSchema, many=True)
     user_id = fields.Integer()
     user = ma.Nested(UserSchema, many=False)
     class Meta: 
-        fields = ("id", "type", "description", "progress", "seen", "assigned_to", "latitude", "longitude", "requester", "user_id", "user")
+        fields = ("id", "type", "description", "progress", "seen", "assigned_to", "latitude", "longitude", "requester", "votes", "message_id", "message", "user_id", "user")
 
     @post_load
     def create_request(self, data, **kwargs):
@@ -94,21 +114,3 @@ class RequestSchema(ma.Schema):
 request_schema = RequestSchema()
 requests_schema = RequestSchema(many=True)
 
-
-class MessageSchema(ma.Schema):
-    id = fields.Integer(primary_key=True)
-    name = fields.String(required=True)
-    text = fields.String(required=True)
-    is_official = fields.Boolean(required=True)
-    votes = fields.Integer()
-    user_id = fields.Integer()
-    user = ma.Nested(UserSchema, many=False)
-    class Meta: 
-        fields = ("id", "name", "text", "is_official", "votes", "user_id", "user")
-
-    @post_load
-    def create_message(self, data, **kwargs):
-        return Message(**data)
-    
-message_schema = MessageSchema()
-messages_schema = MessageSchema(many=True)

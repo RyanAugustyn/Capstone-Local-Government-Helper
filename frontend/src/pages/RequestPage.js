@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import axios from "axios";
+import useAuth from "../hooks/useAuth";
 
 const RequestPage = () => {
   const { requestID } = useParams();
+  const [user, token] = useAuth();
   const [request, setRequest] = useState({
     requester: "it me",
     longitude: -89.445,
@@ -30,6 +32,9 @@ const RequestPage = () => {
     type: "pothole",
     assigned_to: null,
   });
+  const [progress, setProgress] = useState(0);
+  const [votes, setVotes] = useState(0);
+  const [seen, setSeen] = useState(false);
 
   useEffect(() => {
     const getRequest = async () => {
@@ -40,19 +45,29 @@ const RequestPage = () => {
         );
         console.log(response.data);
         setRequest(response.data);
+        setProgress(response.data.progress);
+        setVotes(response.data.votes);
+        setSeen(response.data.seen);
       } catch (error) {
         console.log(error.response.data);
       }
     };
     getRequest();
-  }, [requestID]);
+  }, []);
 
   return (
     <div className="page_container">
       <h2> Request Page for number: {request.id}</h2>
       <h3>Request: {request.type}</h3>
+      <p>Progress: {progress}</p>
+      <p>Votes: {votes}</p>
+      <p>Seen: {seen}</p>
     </div>
   );
 };
 
 export default RequestPage;
+
+// including type, progress (if any), whether a local official has seen the request,
+//  number of people who have voted on issue, messages associated with the issue,
+//   and map with pin showing where the issue is located (Google Maps API)

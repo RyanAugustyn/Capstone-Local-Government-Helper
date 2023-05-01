@@ -23,7 +23,6 @@ const SubmitRequest = (props) => {
       latitude: props.lat,
       longitude: props.lng,
       requester: user.username,
-      //don't need 'requester' if have token tying to user
     };
 
     console.log(newRequest);
