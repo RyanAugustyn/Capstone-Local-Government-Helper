@@ -28,28 +28,6 @@ class RegisterSchema(ma.Schema):
     
 register_schema = RegisterSchema()
     
-class UserSchema(ma.Schema):
-    """
-    Schema used for displaying users, does NOT include password
-    """
-    id = fields.Integer(primary_key=True)
-    username = fields.String(required=True)
-    first_name = fields.String(required=True)
-    last_name = fields.String(required=True)
-    email = fields.String(required=True)
-    street_address = fields.String(required=True)
-    city = fields.String(required=True)
-    zip = fields.Integer(required=True)
-    phone = fields.Integer()
-    blocked = fields.Boolean()
-    position = fields.String(required=True)
-    class Meta:
-        fields = ("id", "username", "first_name", "last_name", "email", "street_address", "city", "zip", "phone", "blocked", "position")
-
-
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
-
 
 # Car Schemas
 class CarSchema(ma.Schema):
@@ -58,7 +36,7 @@ class CarSchema(ma.Schema):
     model = fields.String(required=True)
     year = fields.Integer()
     user_id = fields.Integer()
-    user = ma.Nested(UserSchema, many=False)
+    # user = ma.Nested(UserSchema, many=False)
     class Meta:
         fields = ("id", "make", "model", "year", "user_id", "user")
     
@@ -79,8 +57,9 @@ class MessageSchema(ma.Schema):
     username = fields.String(required=True)
     text = fields.String(required=True)
     is_official = fields.Boolean(required=True)
+    request_id = fields.Integer()
     class Meta: 
-        fields = ("id", "name", "username", "text", "is_official")
+        fields = ("id", "name", "username", "text", "is_official", "request_id")
 
     @post_load
     def create_message(self, data, **kwargs):
@@ -98,14 +77,11 @@ class RequestSchema(ma.Schema):
     assigned_to = fields.String()
     latitude = fields.Float(required=True)
     longitude = fields.Float(required=True)
-    requester = fields.String(required=True)
+    requester = fields.Integer(required=True)
     votes = fields.Integer()
-    message_id = fields.Integer()
-    message = ma.Nested(MessageSchema, many=True)
-    user_id = fields.Integer()
-    user = ma.Nested(UserSchema, many=False)
+    messages = ma.Nested(MessageSchema, many=True)
     class Meta: 
-        fields = ("id", "type", "description", "progress", "seen", "assigned_to", "latitude", "longitude", "requester", "votes", "message_id", "message", "user_id", "user")
+        fields = ("id", "type", "description", "progress", "seen", "assigned_to", "latitude", "longitude", "requester", "votes", "messages")
 
     @post_load
     def create_request(self, data, **kwargs):
@@ -114,3 +90,26 @@ class RequestSchema(ma.Schema):
 request_schema = RequestSchema()
 requests_schema = RequestSchema(many=True)
 
+
+class UserSchema(ma.Schema):
+    """
+    Schema used for displaying users, does NOT include password
+    """
+    id = fields.Integer(primary_key=True)
+    username = fields.String(required=True)
+    first_name = fields.String(required=True)
+    last_name = fields.String(required=True)
+    email = fields.String(required=True)
+    street_address = fields.String(required=True)
+    city = fields.String(required=True)
+    zip = fields.Integer(required=True)
+    phone = fields.String()
+    blocked = fields.Boolean()
+    upvoted_requests = ma.Nested(RequestSchema, many=True)
+    position = fields.String(required=True)
+    class Meta:
+        fields = ("id", "username", "first_name", "last_name", "email", "street_address", "city", "zip", "phone", "blocked", "upvoted_requests", "position")
+
+
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)

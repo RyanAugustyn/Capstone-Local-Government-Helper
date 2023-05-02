@@ -93,7 +93,7 @@ class AllRequestsResource(Resource):
     def post(self):
         user_id = get_jwt_identity()
         form_data = request.get_json()
-        form_data["user_id"] = int(user_id)
+        form_data["requester"] = int(user_id)
         request_object = request_schema.load(form_data)
         db.session.add(request_object)
         db.session.commit()
@@ -106,6 +106,21 @@ class UserResource(Resource):
     def get(self, user_id): 
         user = User.query.get_or_404(user_id)
         return user_schema.dump(user), 200
+    
+    @jwt_required()
+    def put(self, user_id):
+        try:
+            verify_jwt_in_request()
+            #user_id = get_jwt_identity()
+            request_object = User.query.get_or_404(user_id)
+            if 'blocked' in request.json:
+                request_object.blocked = request.json['blocked']
+            if 'upvoted_requests' in request.json:
+                request_object.upvoted_requests = request.json['upvoted_requests']
+            db.session.commit()
+            return user_schema.dump(request_object), 200
+        except:
+            return "Unauthorized", 401
 
         
 
@@ -114,8 +129,27 @@ class AllUsersResource(Resource):
         user_json = User.query.all()
         return users_schema.dump(user_json), 200
     
+    
 
 class AllOfficials(Resource): 
     def get(self):
         officials = User.query.filter(User.position != None)
         return users_schema.dump(officials), 200
+    
+class UpvoteRequest(Resource):
+    @jwt_required()
+    def put(self, request_id):
+        try:
+            verify_jwt_in_request()
+            user_id = get_jwt_identity()
+            user_object = User.query.get_or_404(user_id)
+            request_object = Request.query.get_or_404(request_id)
+            if request_object in user_object.upvoted_requests:
+                user_object.upvoted_requests.remove(request_object)
+            else:
+                user_object.upvoted_requests.append(request_object)
+            db.session.commit()
+            return user_schema.dump(user_object), 200
+        except Exception as err:
+            print(err)
+            return err, 401

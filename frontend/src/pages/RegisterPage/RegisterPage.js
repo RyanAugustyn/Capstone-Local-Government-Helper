@@ -14,6 +14,7 @@ const RegisterPage = () => {
     city: "",
     zip: "",
     phone: "",
+    position: "",
   };
 
   const [formData, handleInputChange, handleSubmit] = useCustomForm(
@@ -102,6 +103,15 @@ const RegisterPage = () => {
             type="text"
             name="phone"
             value={formData.phone}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          If official, enter position:{" "}
+          <input
+            type="text"
+            name="position"
+            value={formData.position}
             onChange={handleInputChange}
           />
         </label>

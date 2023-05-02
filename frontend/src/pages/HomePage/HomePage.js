@@ -65,6 +65,7 @@ const HomePage = () => {
     <div className="container">
       {console.log(user)}
       <h1>Home Page for {user.username}!</h1>
+      <h1>test{user.position}!</h1>
       {/* check for map loading */}
       {!isLoaded ? (
         <div>Loading...</div>

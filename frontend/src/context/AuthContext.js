@@ -15,6 +15,7 @@ function setUserObject(user) {
     username: user.username,
     id: user.id,
     first_name: user.first_name,
+    position: user.position,
   };
 }
 
@@ -39,6 +40,7 @@ export const AuthProvider = ({ children }) => {
         city: registerData.city,
         zip: registerData.zip,
         phone: registerData.phone,
+        position: registerData.position,
       };
       let response = await axios.post(`${BASE_URL}/register`, finalData);
       if (response.status === 201) {

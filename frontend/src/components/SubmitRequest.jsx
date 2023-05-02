@@ -22,7 +22,7 @@ const SubmitRequest = (props) => {
       description: description,
       latitude: props.lat,
       longitude: props.lng,
-      requester: user.username,
+      requester: user.id,
     };
 
     console.log(newRequest);
