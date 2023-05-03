@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
+import AddMessage from "../components/Message";
 
 const RequestPage = () => {
   const { requestID } = useParams();
@@ -101,6 +102,7 @@ const RequestPage = () => {
       <button type="submit" onClick={handleSubmit}>
         Upvote Issue
       </button>
+      <AddMessage></AddMessage>
     </div>
   );
 };
