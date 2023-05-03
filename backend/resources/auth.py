@@ -11,6 +11,7 @@ class RegisterResource(Resource):
     """ User Registration, creates new user """
     def post(self):
         form_data = request.get_json()
+        print(form_data)
         try:
             new_user = register_schema.load(form_data)
             new_user.hash_password()
@@ -36,7 +37,8 @@ class LoginResource(Resource):
         additional_claims = {
             'id': user.id,
             'username': user.username,
-            'first_name': user.first_name
+            'first_name': user.first_name,
+            'position' : user.position
         }
         access_token = create_access_token(identity=str(user.id), additional_claims=additional_claims, expires_delta=expires)
         return {'access': access_token}, 200

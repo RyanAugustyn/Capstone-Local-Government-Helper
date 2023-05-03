@@ -34,6 +34,7 @@ const HomePage = () => {
 
   //retrieve list of requests
   useEffect(() => {
+    console.log("TEST value for token: ", token);
     const fetchRequests = async () => {
       try {
         let response = await axios.get("http://127.0.0.1:5000/api/requests");
@@ -46,7 +47,7 @@ const HomePage = () => {
   }, [token]);
 
   const center = useMemo(
-    () => ({ lat: 44.76490162041539, lng: -89.39070129394531 }),
+    () => ({ lat: 44.95763688292849, lng: -89.63926696777344 }),
     []
   );
   const options = useMemo(
@@ -65,7 +66,9 @@ const HomePage = () => {
     <div className="container">
       {console.log(user)}
       <h1>Home Page for {user.username}!</h1>
-      <h1>test{user.position}!</h1>
+      <h1>test: {user.position}</h1>
+      <h1>test: {user.first_name}</h1>
+      <h1>test: {user.id}</h1>
       {/* check for map loading */}
       {!isLoaded ? (
         <div>Loading...</div>

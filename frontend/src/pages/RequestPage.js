@@ -35,25 +35,61 @@ const RequestPage = () => {
   const [progress, setProgress] = useState(0);
   const [votes, setVotes] = useState(0);
   const [seen, setSeen] = useState(false);
+  const [liked, setLiked] = useState();
 
   useEffect(() => {
     const getRequest = async () => {
       try {
-        console.log(requestID);
         let response = await axios.get(
           `http://127.0.0.1:5000/api/requests/${requestID}`
         );
-        console.log(response.data);
         setRequest(response.data);
         setProgress(response.data.progress);
         setVotes(response.data.votes);
         setSeen(response.data.seen);
+        getLikeStatus();
       } catch (error) {
         console.log(error.response.data);
       }
     };
     getRequest();
-  }, []);
+  }, [requestID]);
+
+  //handle click of like button
+  async function handleSubmit(event) {
+    event.preventDefault();
+    try {
+      await axios.put(
+        `http://127.0.0.1:5000/api/upvoterequest/${requestID}`,
+        null,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      alert("Thank you for liking!");
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  }
+
+  //get status of user upvoting request
+  const getLikeStatus = async () => {
+    try {
+      let response = await axios.get(
+        `http://127.0.0.1:5000/api/upvoterequest/${requestID}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      setLiked(response.data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
 
   return (
     <div className="page_container">
@@ -62,6 +98,9 @@ const RequestPage = () => {
       <p>Progress: {progress}</p>
       <p>Votes: {votes}</p>
       <p>Seen: {seen}</p>
+      <button type="submit" onClick={handleSubmit}>
+        Upvote Issue
+      </button>
     </div>
   );
 };

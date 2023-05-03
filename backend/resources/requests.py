@@ -137,6 +137,23 @@ class AllOfficials(Resource):
         return users_schema.dump(officials), 200
     
 class UpvoteRequest(Resource):
+    #return liked status
+    @jwt_required()
+    def get(self, request_id):
+        try:
+            verify_jwt_in_request()
+            user_id = get_jwt_identity()
+            user_object = User.query.get_or_404(user_id)
+            request_object = Request.query.get_or_404(request_id)
+            if request_object in user_object.upvoted_requests:
+                return True
+            else:
+                return False
+        except Exception as err:
+            print(err)
+            return err, 401
+
+
     @jwt_required()
     def put(self, request_id):
         try:
@@ -146,8 +163,10 @@ class UpvoteRequest(Resource):
             request_object = Request.query.get_or_404(request_id)
             if request_object in user_object.upvoted_requests:
                 user_object.upvoted_requests.remove(request_object)
+                request_object.votes -= 1
             else:
                 user_object.upvoted_requests.append(request_object)
+                request_object.votes += 1
             db.session.commit()
             return user_schema.dump(user_object), 200
         except Exception as err:

@@ -19,8 +19,9 @@ class RegisterSchema(ma.Schema):
     city = fields.String(required=True)
     zip = fields.Integer(required=True)
     phone = fields.String()
+    position = fields.String()
     class Meta:
-        fields = ("id", "username",  "password", "first_name", "last_name", "email", "street_address", "city", "zip", "phone")
+        fields = ("id", "username",  "password", "first_name", "last_name", "email", "street_address", "city", "zip", "phone", "position")
 
     @post_load
     def create_user(self, data, **kwargs):
