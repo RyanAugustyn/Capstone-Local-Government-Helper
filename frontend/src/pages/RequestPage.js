@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import AddMessage from "../components/Message";
+import DisplayMessages from "../components/DisplayMessages";
 
 const RequestPage = () => {
   const { requestID } = useParams();
@@ -103,6 +104,7 @@ const RequestPage = () => {
         Upvote Issue
       </button>
       <AddMessage></AddMessage>
+      <DisplayMessages></DisplayMessages>
     </div>
   );
 };
