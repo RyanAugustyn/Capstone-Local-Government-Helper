@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import AddMessage from "../components/Message";
 import DisplayMessages from "../components/DisplayMessages";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 
 const RequestPage = () => {
   const { requestID } = useParams();
@@ -70,7 +71,7 @@ const RequestPage = () => {
           },
         }
       );
-      alert("Thank you for liking!");
+      setLiked(!liked);
     } catch (error) {
       console.log(error.response.data);
     }
@@ -93,6 +94,22 @@ const RequestPage = () => {
     }
   };
 
+  //Google Maps
+  const center = useMemo(
+    () => ({ lat: request.latitude, lng: request.longitude }),
+    []
+  );
+  const options = useMemo(
+    () => ({
+      disableDefaultUI: true,
+      clickableIcons: false,
+    }),
+    []
+  );
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  });
+
   return (
     <div className="page_container">
       <h2> Request Page for number: {request.id}</h2>
@@ -103,6 +120,19 @@ const RequestPage = () => {
       <button type="submit" onClick={handleSubmit}>
         Upvote Issue
       </button>
+      {liked ? <p>LIKED!</p> : <p>Like?</p>}
+      {!isLoaded ? (
+        <p>Loading...</p>
+      ) : (
+        <GoogleMap
+          zoom={14}
+          center={center}
+          mapContainerClassName="mapContainer"
+          options={options}
+        >
+          <Marker position={center}></Marker>
+        </GoogleMap>
+      )}
       <AddMessage></AddMessage>
       <DisplayMessages></DisplayMessages>
     </div>
@@ -110,7 +140,3 @@ const RequestPage = () => {
 };
 
 export default RequestPage;
-
-// including type, progress (if any), whether a local official has seen the request,
-//  number of people who have voted on issue, messages associated with the issue,
-//   and map with pin showing where the issue is located (Google Maps API)

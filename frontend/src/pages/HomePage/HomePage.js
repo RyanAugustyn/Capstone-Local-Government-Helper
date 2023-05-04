@@ -46,6 +46,7 @@ const HomePage = () => {
     fetchRequests();
   }, [token]);
 
+  //Google Maps
   const center = useMemo(
     () => ({ lat: 44.95763688292849, lng: -89.63926696777344 }),
     []
@@ -57,11 +58,10 @@ const HomePage = () => {
     }),
     []
   );
-
-  //Google Maps
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
+
   return (
     <div className="container">
       {console.log(user)}

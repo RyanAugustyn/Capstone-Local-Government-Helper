@@ -20,25 +20,27 @@ const DisplayMessages = () => {
       }
     };
     getMessages();
-  }, []);
+  }, [requestID]);
 
   //isofficial, text, username
   return (
     <div className="displayMessagesContainer">
       {messages.map((message, index) => (
-        <div class="card" key={index}>
-          <div class="card-body">
-            <h5 class="card-title">{message.username}</h5>
-            {message.is_official == null ? (
-              <h6 class="card-subtitle mb-2 text-muted">Concerned Citizen</h6>
+        <div className="card" key={index}>
+          <div className="card-body">
+            <h5 className="card-title">{message.username}</h5>
+            {message.is_official == false ? (
+              <h6 className="card-subtitle mb-2 text-muted">
+                Concerned Citizen
+              </h6>
             ) : (
-              <h6 class="card-subtitle mb-2 text-muted">Local Official</h6>
+              <h6 className="card-subtitle mb-2 text-muted">Local Official</h6>
             )}
-            <p class="card-text">{message.text}</p>
-            <a href="#" class="card-link">
+            <p className="card-text">{message.text}</p>
+            <a href="#" className="card-link">
               Card link
             </a>
-            <a href="#" class="card-link">
+            <a href="#" className="card-link">
               Another link
             </a>
           </div>
