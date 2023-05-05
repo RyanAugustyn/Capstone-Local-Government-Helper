@@ -13,7 +13,6 @@ const DisplayMessages = () => {
         let filteredData = response.data.filter(
           (message) => message.request_id == requestID
         );
-        console.log(filteredData);
         setMessages(filteredData);
       } catch (error) {
         console.log(error.response.data);
@@ -37,12 +36,6 @@ const DisplayMessages = () => {
               <h6 className="card-subtitle mb-2 text-muted">Local Official</h6>
             )}
             <p className="card-text">{message.text}</p>
-            <a href="#" className="card-link">
-              Card link
-            </a>
-            <a href="#" className="card-link">
-              Another link
-            </a>
           </div>
         </div>
       ))}

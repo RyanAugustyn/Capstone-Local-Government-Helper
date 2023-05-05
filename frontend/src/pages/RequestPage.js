@@ -6,6 +6,7 @@ import useAuth from "../hooks/useAuth";
 import AddMessage from "../components/Message";
 import DisplayMessages from "../components/DisplayMessages";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import DisplayRequesterInfo from "../components/DisplayRequesterInfo";
 
 const RequestPage = () => {
   const { requestID } = useParams();
@@ -39,6 +40,7 @@ const RequestPage = () => {
   const [votes, setVotes] = useState(0);
   const [seen, setSeen] = useState(false);
   const [liked, setLiked] = useState();
+  const [requester, setRequester] = useState({});
 
   useEffect(() => {
     const getRequest = async () => {
@@ -56,6 +58,7 @@ const RequestPage = () => {
       }
     };
     getRequest();
+    getUserInfo();
   }, [requestID]);
 
   //handle click of like button
@@ -94,6 +97,28 @@ const RequestPage = () => {
     }
   };
 
+  //if not official, display nothing, else return requester info
+  const getUserInfo = async () => {
+    if (user.position == null) {
+      return;
+    } else {
+      try {
+        let response = await axios.get(
+          `127.0.0.1:5000/api/users/${request.requester}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        console.log(response.data);
+        setRequester(response.data);
+      } catch (err) {
+        console.log(err.response.data);
+      }
+    }
+  };
+
   //Google Maps
   const center = useMemo(
     () => ({ lat: request.latitude, lng: request.longitude }),
@@ -112,6 +137,10 @@ const RequestPage = () => {
 
   return (
     <div className="page_container">
+      {/* {user.position != null && (
+        
+      )} */}
+      <DisplayRequesterInfo requester={requester}></DisplayRequesterInfo>
       <h2> Request Page for number: {request.id}</h2>
       <h3>Request: {request.type}</h3>
       <p>Progress: {progress}</p>
