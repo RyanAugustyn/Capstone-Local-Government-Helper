@@ -47,7 +47,7 @@ const SubmitRequest = (props) => {
       <form className="form-control" onSubmit={handleSubmit}>
         <h1>Send us a Request!</h1>
         <DropdownButton
-          class="btn btn-outline-secondary dropdown-toggle"
+          className="btn btn-outline-secondary dropdown-toggle"
           title={type}
           data-bs-toggle="dropdown"
           onSelect={(e) => {

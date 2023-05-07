@@ -13,7 +13,7 @@ const AddMessage = () => {
     if (user.position != null) {
       setIsOfficial(true);
     }
-  });
+  }, [user.position]);
   async function handleSubmit(event) {
     event.preventDefault();
     let newMessage = {
@@ -40,10 +40,10 @@ const AddMessage = () => {
       <form onSubmit={handleSubmit}>
         <h3>Posting as {user.username}</h3>
         {isOfficial ? <p>Official Post</p> : <p></p>}
-        <div class="form-group">
-          <label for="textArea">Leave your comment here:</label>
+        <div className="form-group">
+          <label htmlFor="textArea">Leave your comment here:</label>
           <input
-            class="form-control"
+            className="form-control"
             id="textArea"
             rows="3"
             name="text"

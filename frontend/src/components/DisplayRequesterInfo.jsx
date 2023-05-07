@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 
-const DisplayRequesterInfo = (props) => {
+const DisplayRequesterInfo = ({ requester }) => {
   return (
-    <div class="card" style="width: 18rem;">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Full name:</li>
-        <li class="list-group-item">Dapibus ac facilisis in</li>
-        <li class="list-group-item">Vestibulum at eros</li>
+    <div className="card">
+      <ul className="list-group list-group-flush">
+        <li className="list-group-item">
+          Full name: {requester.first_name} {requester.last_name}
+        </li>
+        <li className="list-group-item">Email: {requester.email}</li>
+        <li className="list-group-item">Phone: {requester.phone}</li>
+        <li className="list-group-item">
+          Street Address: {requester.street_address}
+        </li>
+        <li className="list-group-item">City: {requester.city}</li>
+        <li className="list-group-item">
+          Blocked(if applicable)? {requester.blocked}{" "}
+        </li>
       </ul>
     </div>
   );

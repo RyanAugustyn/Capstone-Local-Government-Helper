@@ -59,8 +59,9 @@ class MessageSchema(ma.Schema):
     text = fields.String(required=True)
     is_official = fields.Boolean(required=True)
     request_id = fields.Integer()
+    pinned = fields.Boolean()
     class Meta: 
-        fields = ("id", "name", "username", "text", "is_official", "request_id")
+        fields = ("id", "name", "username", "text", "is_official", "request_id", "pinned")
 
     @post_load
     def create_message(self, data, **kwargs):

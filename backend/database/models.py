@@ -67,3 +67,4 @@ class Message(db.Model):
     is_official = db.Column(db.Boolean, default= False, nullable = False)
     request_id = db.Column(db.Integer, db.ForeignKey('request.id'))
     request = db.relationship("Request") 
+    pinned = db.Column(db.Boolean, default = False)
