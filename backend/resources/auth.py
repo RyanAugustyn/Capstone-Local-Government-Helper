@@ -29,6 +29,8 @@ class LoginResource(Resource):
             User.query.filter_by(username=form_data.get('username')),
             description=f"No user with that username."
         )
+        if user.blocked:
+            return {'error': 'Your account has been blocked'}, 403
         authorized = user.check_password(form_data.get('password'))
         if not authorized:
             return {'error': 'Username or password invalid'}, 401

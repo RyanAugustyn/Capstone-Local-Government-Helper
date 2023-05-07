@@ -2,19 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import { Dropdown, DropdownButton } from "react-bootstrap";
+import "../App.css";
 
 const SubmitRequest = (props) => {
   const [user, token] = useAuth();
   const [type, setType] = useState("Issue type?");
   const [description, setDescription] = useState("");
-  const [requester, setRequester] = useState("");
 
-  //axios get individual user for requester field
-
-  const handleSelect = (e) => {
-    console.log(e);
-    setType(e);
-  };
   async function handleSubmit(event) {
     event.preventDefault();
     let newRequest = {
@@ -24,8 +18,6 @@ const SubmitRequest = (props) => {
       longitude: props.lng,
       requester: user.id,
     };
-
-    console.log(newRequest);
     try {
       let response = await axios.post(
         "http://127.0.0.1:5000/api/requests",
@@ -46,21 +38,26 @@ const SubmitRequest = (props) => {
     <div>
       <form className="form-control" onSubmit={handleSubmit}>
         <h1>Send us a Request!</h1>
-        <DropdownButton
-          className="btn btn-outline-secondary dropdown-toggle"
-          title={type}
-          data-bs-toggle="dropdown"
+
+        <Dropdown
           onSelect={(e) => {
             setType(e);
           }}
+          className="w-auto"
         >
-          <Dropdown.Item eventKey="Pothole">Pothole</Dropdown.Item>
-          <Dropdown.Item eventKey="Animal Control">
-            Animal Control
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="Power Line">Power Line</Dropdown.Item>
-          <Dropdown.Item eventKey="Damaged Sign">Damaged Sign</Dropdown.Item>
-        </DropdownButton>
+          <Dropdown.Toggle variant="success" id="typeDropdown" title={type}>
+            {type}
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item eventKey="Pothole">Pothole</Dropdown.Item>
+            <Dropdown.Item eventKey="Animal Control">
+              Animal Control
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="Power Line">Power Line</Dropdown.Item>
+            <Dropdown.Item eventKey="Damaged Sign">Damaged Sign</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
         <div className="input-group mb-3">
           <label>Description</label>
           <input

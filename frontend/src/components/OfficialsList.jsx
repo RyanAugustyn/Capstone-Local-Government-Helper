@@ -92,6 +92,7 @@ const OfficialsList = () => {
           </h2>
           <p>Email Address: {official.email}</p>
           <p>Phone Number: {official.phone}</p>
+          <p>Position: {official.position}</p>
         </div>
       ))}
     </div>

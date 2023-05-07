@@ -8,7 +8,6 @@ import {
   MarkerClusterer,
 } from "@react-google-maps/api";
 import "../../App.css";
-
 import axios from "axios";
 import SubmitRequest from "../../components/SubmitRequest";
 import OfficialsList from "../../components/OfficialsList";
@@ -63,9 +62,6 @@ const HomePage = () => {
   return (
     <div className="container">
       <h1>Home Page for {user.username}!</h1>
-      <h1>test: {user.position}</h1>
-      <h1>test: {user.first_name}</h1>
-      <h1>test: {user.id}</h1>
       {/* check for map loading */}
       {!isLoaded ? (
         <div>Loading...</div>

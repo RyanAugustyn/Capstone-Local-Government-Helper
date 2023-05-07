@@ -57,9 +57,14 @@ button:hover {
   font-size: 17px;
 }
 
+/* HOME PAGE */
 .mapContainer {
   width: 400px;
   height: 400px;
+}
+
+#typeDropdown {
+  max-width: max-content;
 }
 
 .test {

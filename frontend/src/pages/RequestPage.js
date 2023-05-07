@@ -150,7 +150,6 @@ const RequestPage = () => {
       {user.position != null && (
         <DisplayRequesterInfo requester={requester}></DisplayRequesterInfo>
       )}
-      <h2> Request Page for number: {request.id}</h2>
       <h3>Request: {request.type}</h3>
       <h3>Description: {request.description}</h3>
       <p>Progress: {progress}</p>
