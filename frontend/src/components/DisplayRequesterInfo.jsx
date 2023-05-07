@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const DisplayRequesterInfo = ({ requester }) => {
   return (
@@ -15,6 +16,11 @@ const DisplayRequesterInfo = ({ requester }) => {
         <li className="list-group-item">City: {requester.city}</li>
         <li className="list-group-item">
           Blocked(if applicable)? {requester.blocked}{" "}
+        </li>
+        <li className="list-group-item">
+          <Link className="requestLink" to={`/users/${requester.id}`}>
+            GET FULL DETAILS{" "}
+          </Link>
         </li>
       </ul>
     </div>

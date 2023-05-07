@@ -137,6 +137,7 @@ const RequestPage = () => {
           lat: response.data.latitude,
           lng: response.data.longitude,
         });
+        console.log(requester);
       } catch (error) {
         console.log(error.response.data);
       }
