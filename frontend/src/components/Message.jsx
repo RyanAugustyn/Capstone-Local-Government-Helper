@@ -8,6 +8,7 @@ const AddMessage = () => {
   const { requestID } = useParams();
   const [text, setText] = useState("");
   const [isOfficial, setIsOfficial] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     if (user.position != null) {
@@ -22,8 +23,10 @@ const AddMessage = () => {
       text: text,
       is_official: isOfficial,
       request_id: requestID,
+      pinned: checked,
     };
     console.log(newMessage);
+    console.log(checked);
     try {
       await axios.post("http://127.0.0.1:5000/api/messages", newMessage, {
         headers: {
@@ -35,6 +38,11 @@ const AddMessage = () => {
       console.log(error.response.data);
     }
   }
+
+  const handleCheck = (event) => {
+    setChecked(event.target.checked);
+  };
+
   return (
     <div className="messageContainer">
       <form onSubmit={handleSubmit}>
@@ -51,6 +59,19 @@ const AddMessage = () => {
             placeholder="Leave your comment here..."
           ></input>
         </div>
+        {user.position != null && (
+          <div className="form-check">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="pinMessage"
+              onChange={handleCheck}
+            ></input>
+            <label className="form-check-label" htmlFor="pinMessage">
+              Click to pin message to top
+            </label>
+          </div>
+        )}
         <button type="submit">Submit Comment</button>
       </form>
     </div>
