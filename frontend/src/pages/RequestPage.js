@@ -12,9 +12,10 @@ const RequestPage = () => {
   const { requestID } = useParams();
   const [user, token] = useAuth();
   const [request, setRequest] = useState({});
+  const [description, setDescription] = useState("");
   const [progress, setProgress] = useState(0);
   const [votes, setVotes] = useState(0);
-  const [seen, setSeen] = useState(false);
+  const [seen, setSeen] = useState();
   const [liked, setLiked] = useState();
   const [requester, setRequester] = useState({});
   const [marker, setMarker] = useState({ lat: 45, lng: -89 });
@@ -33,6 +34,34 @@ const RequestPage = () => {
         }
       );
       setLiked(!liked);
+      if (liked) {
+        alert("Vote undone");
+      } else {
+        alert("Upvoted!");
+      }
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  }
+
+  async function modifyRequest(event) {
+    event.preventDefault();
+    let newInfo = {
+      description: description,
+      progress: progress,
+      seen: true,
+    };
+    try {
+      await axios.put(
+        `http://127.0.0.1:5000/api/requests/${requestID}`,
+        newInfo,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      alert("Updated Request");
     } catch (error) {
       console.log(error.response.data);
     }
@@ -70,8 +99,6 @@ const RequestPage = () => {
               },
             }
           );
-          console.log("Requester ID: ", requesterID);
-          console.log("User data: ", response.data);
           setRequester(response.data);
         } catch (err) {
           console.log(err.response.data);
@@ -103,9 +130,9 @@ const RequestPage = () => {
         setProgress(response.data.progress);
         setVotes(response.data.votes);
         setSeen(response.data.seen);
+        setDescription(response.data.description);
         getLikeStatus();
         getUserInfo(response.data.requester);
-        console.log(response.data);
         setMarker({
           lat: response.data.latitude,
           lng: response.data.longitude,
@@ -114,8 +141,6 @@ const RequestPage = () => {
         console.log(error.response.data);
       }
     };
-    console.log("Request variable is", request.requester);
-    console.log("Token is: ", token);
     getRequest();
   }, []); //requestID, marker, request, getLikeStatus, getUserInfo
 
@@ -126,9 +151,32 @@ const RequestPage = () => {
       )}
       <h2> Request Page for number: {request.id}</h2>
       <h3>Request: {request.type}</h3>
+      <h3>Description: {request.description}</h3>
       <p>Progress: {progress}</p>
       <p>Votes: {votes}</p>
-      <p>Seen: {seen}</p>
+      {seen && <p>Request seen by official</p>}
+      {user.position != null && (
+        <form className="form-control" onSubmit={modifyRequest}>
+          <h1>Modify Request Details</h1>
+
+          <div className="input-group mb-3">
+            <label>Description</label>
+            <input
+              name="description"
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="input-group mb-3">
+            <label>Progress</label>
+            <input
+              name="progress"
+              onChange={(e) => setProgress(e.target.value)}
+            />
+          </div>
+          <button type="submit">Edit Request</button>
+        </form>
+      )}
+
       <button type="submit" onClick={handleSubmit}>
         Upvote Issue
       </button>

@@ -67,6 +67,10 @@ class RequestResource(Resource):
             request_object = Request.query.get_or_404(request_id)
             if 'description' in request.json:
                 request_object.description = request.json['description']
+            if 'progress' in request.json:
+                request_object.progress = request.json['progress']
+            if 'seen' in request.json:
+                request_object.seen = request.json['seen']
             db.session.commit()
             return request_schema.dump(request_object), 200
         except:

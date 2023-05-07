@@ -11,14 +11,17 @@ const DisplayMessages = () => {
     const getMessages = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:5000/api/messages");
-        const filteredData = response.data.filter(
+        let filteredData = response.data.filter(
           (message) => message.request_id == requestID
         );
         const getPinnedMessages = filteredData.filter(
           (message) => message.pinned
         ); //check if pinned is true or false/null
         setPinnedMessages(getPinnedMessages);
-        setMessages(filteredData);
+        const getUnpinnedMessages = filteredData.filter(
+          (message) => !message.pinned
+        );
+        setMessages(getUnpinnedMessages);
       } catch (error) {
         console.log(error.response.data);
       }

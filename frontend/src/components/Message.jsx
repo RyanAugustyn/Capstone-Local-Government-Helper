@@ -25,8 +25,6 @@ const AddMessage = () => {
       request_id: requestID,
       pinned: checked,
     };
-    console.log(newMessage);
-    console.log(checked);
     try {
       await axios.post("http://127.0.0.1:5000/api/messages", newMessage, {
         headers: {
