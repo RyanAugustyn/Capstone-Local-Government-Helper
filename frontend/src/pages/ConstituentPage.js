@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
+import "../App.css";
 
 const ConstituentPage = () => {
   const { userID } = useParams();
@@ -91,7 +92,7 @@ const ConstituentPage = () => {
   }
 
   return (
-    <div className="page_container">
+    <div className="constituentPageContainer">
       <h1>Constituent Details Page</h1>
       <div className="card">
         <ul className="list-group list-group-flush">
@@ -112,7 +113,7 @@ const ConstituentPage = () => {
           </li>
         </ul>
 
-        <button type="submit" onClick={handleSubmit}>
+        <button type="submit" onClick={handleSubmit} className="blockButton">
           Block Constituent
         </button>
       </div>

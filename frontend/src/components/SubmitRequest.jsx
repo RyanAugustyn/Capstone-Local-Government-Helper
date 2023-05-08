@@ -58,11 +58,12 @@ const SubmitRequest = (props) => {
             <Dropdown.Item eventKey="Damaged Sign">Damaged Sign</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <div className="input-group mb-3">
-          <label>Description</label>
+        <div className="input-group mb-3 submitBox">
+          <label className="submitDescription">Description</label>
           <input
             name="description"
             onChange={(e) => setDescription(e.target.value)}
+            className="submitDescriptionInput"
           />
         </div>
         <button type="submit">Submit Request</button>

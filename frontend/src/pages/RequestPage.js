@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useParams } from "react-router-dom";
-
+import ProgressBar from "react-bootstrap/ProgressBar";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import AddMessage from "../components/Message";
 import DisplayMessages from "../components/DisplayMessages";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import DisplayRequesterInfo from "../components/DisplayRequesterInfo";
+import "../App.css";
 
 const RequestPage = () => {
   const { requestID } = useParams();
@@ -146,17 +147,40 @@ const RequestPage = () => {
   }, []); //requestID, marker, request, getLikeStatus, getUserInfo
 
   return (
-    <div className="page_container">
+    <div className="requestPageContainer">
       {user.position != null && (
         <DisplayRequesterInfo requester={requester}></DisplayRequesterInfo>
       )}
-      <h3>Request: {request.type}</h3>
-      <h3>Description: {request.description}</h3>
-      <p>Progress: {progress}</p>
-      <p>Votes: {votes}</p>
-      {seen && <p>Request seen by official</p>}
+      <div className="card">
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">Request: {request.type}</li>
+          <li className="list-group-item">
+            Description: {request.description}
+          </li>
+          ;
+          <li className="list-group-item">
+            Progress: {progress}{" "}
+            <ProgressBar now={progress} label={`${progress}%`} />
+          </li>
+          <li className="list-group-item">Votes: {votes}</li>
+          <li className="list-group-item">
+            Liked Status: {liked ? <p>LIKED!</p> : <p>Like?</p>}
+          </li>
+          {/* Seen status updated by official modifying request */}
+          <li className="list-group-item">
+            Seen by official: {seen && <p>Request seen by official</p>}
+          </li>
+        </ul>
+      </div>
+
+      <button type="submit" onClick={handleSubmit}>
+        Upvote Issue
+      </button>
       {user.position != null && (
-        <form className="form-control" onSubmit={modifyRequest}>
+        <form
+          className="form-control modifyRequestContainer"
+          onSubmit={modifyRequest}
+        >
           <h1>Modify Request Details</h1>
 
           <div className="input-group mb-3">
@@ -177,10 +201,6 @@ const RequestPage = () => {
         </form>
       )}
 
-      <button type="submit" onClick={handleSubmit}>
-        Upvote Issue
-      </button>
-      {liked ? <p>LIKED!</p> : <p>Like?</p>}
       {!isLoaded ? (
         <p>Loading...</p>
       ) : (

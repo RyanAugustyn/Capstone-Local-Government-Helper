@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import "../App.css";
 
 const AddMessage = () => {
   const [user, token] = useAuth();
@@ -47,14 +48,14 @@ const AddMessage = () => {
         <h3>Posting as {user.username}</h3>
         {isOfficial ? <p>Official Post</p> : <p></p>}
         <div className="form-group">
-          <label htmlFor="textArea">Leave your comment here:</label>
+          <label htmlFor="textArea">Your Comment:</label>
           <input
             className="form-control"
             id="textArea"
             rows="3"
             name="text"
             onChange={(e) => setText(e.target.value)}
-            placeholder="Leave your comment here..."
+            placeholder="Write your comment here"
           ></input>
         </div>
         {user.position != null && (

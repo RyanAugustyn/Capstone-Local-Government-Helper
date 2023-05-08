@@ -85,16 +85,18 @@ const OfficialsList = () => {
   return (
     <div>
       <h2>List of Officials</h2>
-      {officialsList.map((official, index) => (
-        <div key={index}>
-          <h2>
-            {official.first_name} {official.last_name}
-          </h2>
-          <p>Email Address: {official.email}</p>
-          <p>Phone Number: {official.phone}</p>
-          <p>Position: {official.position}</p>
-        </div>
-      ))}
+      <div className="officialsList">
+        {officialsList.map((official, index) => (
+          <div key={index}>
+            <h2>
+              {official.first_name} {official.last_name}
+            </h2>
+            <p>Email Address: {official.email}</p>
+            <p>Phone Number: {official.phone}</p>
+            <p>Position: {official.position}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
