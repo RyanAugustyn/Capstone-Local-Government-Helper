@@ -26,8 +26,10 @@ const DisplayRequests = () => {
           <div key={index}>
             <Link className="requestLink" to={`/requests/${request.id}`}>
               <h2> Request: {request.type}</h2>
+              <p>Description: {request.description}</p>
               <p>Official in Charge: {request.assigned_to}</p>
               <p>Status: {request.progress}</p>
+              {request.seen && <p>Seen by Local Official</p>}
             </Link>
           </div>
         ))}

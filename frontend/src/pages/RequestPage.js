@@ -88,7 +88,7 @@ const RequestPage = () => {
   //if not official, display nothing, else return requester info
   const getUserInfo = useCallback(
     async (requesterID) => {
-      if (user.position == null) {
+      if (user.position == null && user.position != "") {
         return;
       } else {
         try {
@@ -138,7 +138,7 @@ const RequestPage = () => {
           lat: response.data.latitude,
           lng: response.data.longitude,
         });
-        console.log(requester);
+        console.log(user.position);
       } catch (error) {
         console.log(error.response.data);
       }

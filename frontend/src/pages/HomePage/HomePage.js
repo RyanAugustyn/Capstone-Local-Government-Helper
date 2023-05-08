@@ -91,13 +91,13 @@ const HomePage = () => {
           ></Marker>
         </GoogleMap>
       )}
-      <DisplayRequests></DisplayRequests>
-      <OfficialsList></OfficialsList>
       <SubmitRequest
         lat={markerPosition.lat}
         lng={markerPosition.lng}
         user={user}
       ></SubmitRequest>
+      <DisplayRequests></DisplayRequests>
+      <OfficialsList></OfficialsList>
     </div>
   );
 };
