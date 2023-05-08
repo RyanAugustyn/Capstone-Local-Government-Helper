@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../App.css";
+import Card from "react-bootstrap/Card";
 
 const DisplayRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -23,15 +24,17 @@ const DisplayRequests = () => {
       <h2>Current Requests</h2>
       <div className="requestsContainer">
         {requests.map((request, index) => (
-          <div key={index}>
+          // editing here
+          <Card key={index} className="displayRequestsCard">
             <Link className="requestLink" to={`/requests/${request.id}`}>
-              <h2> Request: {request.type}</h2>
-              <p>Description: {request.description}</p>
-              <p>Official in Charge: {request.assigned_to}</p>
-              <p>Status: {request.progress}</p>
-              {request.seen && <p>Seen by Local Official</p>}
+              <Card.Body>
+                <Card.Title>{request.type}</Card.Title>
+                {/* <Card.Subtitle className="mb-2 text-muted"> more here </Card.Subtitle> */}
+                <Card.Text>{request.description}</Card.Text>
+              </Card.Body>
             </Link>
-          </div>
+          </Card>
+          //end edit
         ))}
       </div>
     </div>
@@ -39,3 +42,15 @@ const DisplayRequests = () => {
 };
 
 export default DisplayRequests;
+
+{
+  /* <div key={index}>
+            <Link className="requestLink" to={`/requests/${request.id}`}>
+              <h2> Request: {request.type}</h2>
+              <p>Description: {request.description}</p>
+              <p>Official in Charge: {request.assigned_to}</p>
+              <p>Status: {request.progress}</p>
+              {request.seen && <p>Seen by Local Official</p>}
+            </Link>
+          </div> */
+}
