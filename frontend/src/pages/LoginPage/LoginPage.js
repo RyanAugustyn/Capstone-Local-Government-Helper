@@ -19,7 +19,12 @@ const LoginPage = () => {
   }, [isServerError]);
 
   return (
-    <div className="container">
+    <div className="loginContainer">
+      <div className="welcomeBanner">
+        <h2>Welcome to LocalFix!</h2>
+        <h4>An easier way for communities and their local officials to talk</h4>
+        <p>Fast Simple Fixed!</p>
+      </div>
       <form className="form" onSubmit={handleSubmit}>
         <label>
           Username:{" "}

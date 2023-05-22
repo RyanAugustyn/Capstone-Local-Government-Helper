@@ -1,3 +1,20 @@
 .error {
   color: red;
 }
+
+.loginContainer {
+  width: 100vw;
+}
+
+.welcomeBanner {
+  background-color: #424ebe;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: left;
+  width: 100vw;
+  height: 200px;
+  margin-top: 0;
+  color: white;
+  border-top: solid;
+}
