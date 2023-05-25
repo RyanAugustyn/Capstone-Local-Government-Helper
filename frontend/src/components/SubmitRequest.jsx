@@ -37,7 +37,13 @@ const SubmitRequest = (props) => {
   return (
     <div>
       <form className="form-control" onSubmit={handleSubmit}>
-        <h1>Send us a Request!</h1>
+        <h1 className="submitFormTitle">Send us a Request!</h1>
+        <ol>
+          <li>Click on the map showing where the issue is</li>
+          <li>Choose the type of issue</li>
+          <li>Write a brief description of the issue</li>
+          <li>And submit!</li>
+        </ol>
 
         <Dropdown
           onSelect={(e) => {
@@ -59,11 +65,11 @@ const SubmitRequest = (props) => {
           </Dropdown.Menu>
         </Dropdown>
         <div className="input-group mb-3 submitBox">
-          <label className="submitDescription">Description</label>
           <input
             name="description"
             onChange={(e) => setDescription(e.target.value)}
             className="submitDescriptionInput"
+            placeholder="Describe your issue here..."
           />
         </div>
         <button type="submit">Submit Request</button>

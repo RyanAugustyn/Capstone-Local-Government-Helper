@@ -61,41 +61,45 @@ const HomePage = () => {
 
   return (
     <div className="container">
-      <h1>Home Page for {user.username}!</h1>
+      <h1 className="homePageWelcome">
+        Welcome to your home page {user.username}!
+      </h1>
       {/* check for map loading */}
-      {!isLoaded ? (
-        <div>Loading...</div>
-      ) : (
-        <GoogleMap
-          zoom={14}
-          center={center}
-          mapContainerClassName="mapContainer"
-          options={options}
-          onClick={handleMapClick}
-        >
-          <MarkerClusterer>
-            {(clusterer) =>
-              requests.map((marker, index) => (
-                <Marker
-                  key={index}
-                  position={{ lat: marker.latitude, lng: marker.longitude }}
-                  clusterer={clusterer}
-                ></Marker>
-              ))
-            }
-          </MarkerClusterer>
-          <Marker
-            position={markerPosition}
-            draggable={true}
-            onMouseUp={handleMapClick}
-          ></Marker>
-        </GoogleMap>
-      )}
-      <SubmitRequest
-        lat={markerPosition.lat}
-        lng={markerPosition.lng}
-        user={user}
-      ></SubmitRequest>
+      <div className="submitContainer">
+        {!isLoaded ? (
+          <div>Loading...</div>
+        ) : (
+          <GoogleMap
+            zoom={14}
+            center={center}
+            mapContainerClassName="mapContainer"
+            options={options}
+            onClick={handleMapClick}
+          >
+            <MarkerClusterer>
+              {(clusterer) =>
+                requests.map((marker, index) => (
+                  <Marker
+                    key={index}
+                    position={{ lat: marker.latitude, lng: marker.longitude }}
+                    clusterer={clusterer}
+                  ></Marker>
+                ))
+              }
+            </MarkerClusterer>
+            <Marker
+              position={markerPosition}
+              draggable={true}
+              onMouseUp={handleMapClick}
+            ></Marker>
+          </GoogleMap>
+        )}
+        <SubmitRequest
+          lat={markerPosition.lat}
+          lng={markerPosition.lng}
+          user={user}
+        ></SubmitRequest>
+      </div>
       <DisplayRequests></DisplayRequests>
       <OfficialsList></OfficialsList>
     </div>
