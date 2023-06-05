@@ -35,10 +35,10 @@ const SubmitRequest = (props) => {
   }
 
   return (
-    <div>
+    <div className="submitRequestContainer">
       <form className="form-control" onSubmit={handleSubmit}>
         <h1 className="submitFormTitle">Send us a Request!</h1>
-        <ol>
+        <ol className="submitRequestInstructions">
           <li>Click on the map showing where the issue is</li>
           <li>Choose the type of issue</li>
           <li>Write a brief description of the issue</li>

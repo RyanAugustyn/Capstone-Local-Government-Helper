@@ -66,12 +66,13 @@ button:hover {
 
 .submitContainer {
   display: flex;
+  justify-content: space-between;
 }
 
 .mapContainer {
   display: flex;
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
   margin: auto;
   margin-bottom: 4em;
 }
@@ -113,6 +114,16 @@ button:hover {
 
 /* Submit Request */
 
+.submitRequestContainer {
+  width: 600px;
+}
+
+@media (max-width: 900px) {
+  .submitRequestContainer {
+    width: 650px;
+  }
+}
+
 .submitFormTitle {
   color: blue;
   margin-bottom: 2rem;
@@ -134,6 +145,20 @@ button:hover {
 .submitBox {
   display: flex;
   flex-direction: column;
+}
+
+.submitRequestInstructions {
+  color: rgba(196, 168, 11, 0.945);
+}
+
+.submitRequestInstructions li {
+  margin-left: -20px;
+  text-indent: -60px;
+}
+
+.submitRequestInstructions li {
+  margin-bottom: 0.5rem;
+  width: 40vw;
 }
 
 /* RequestPage */
